@@ -47,13 +47,17 @@ public func routes(_ router: Router) throws {
         return CountJSON(count: count)
     }
     
+    router.post(UserInfo.self,at: "user-info") { req, data -> String in
+        return "Hello \(data.name), you are \(data.age)"
+    }
+    
 }
 
     struct InfoData: Content {
         let name: String
     }
 
-    struct InfoResponse : Content {
+    struct InfoResponse: Content {
         let request: InfoData
     }
 
@@ -61,6 +65,10 @@ public func routes(_ router: Router) throws {
         let count: Int
     }
 
+    struct UserInfo: Content {
+        let name: String
+        let age: Int
+    }
 
 
 
