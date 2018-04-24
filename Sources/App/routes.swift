@@ -32,6 +32,17 @@ public func routes(_ router: Router) throws {
     router.post(InfoData.self, at: "info/json") { req, data -> InfoResponse in
         return InfoResponse(request: data)
     }
+    
+/// Challenge time!
+    router.get("date") { req -> String in
+        let date = Date()
+        let formatter = DateFormatter()
+        
+        formatter.dateFormat="dd.MM.yyyy"
+        let result = formatter.string(from: date)
+        
+        return result
+    }
 }
     
     struct InfoResponse : Content {
