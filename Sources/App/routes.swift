@@ -1,9 +1,6 @@
 import Routing
 import Vapor
 
-struct InfoData: Content {
-    let name: String
-}
 
 /// Register your application's routes here.
 ///
@@ -23,6 +20,7 @@ public func routes(_ router: Router) throws {
         return "Hello \(name)"
     }
     
+//The method shown in video is deprecated, refer author's note below the video
     
     router.post(InfoData.self, at: "info/string") { req, data -> String in
         return "Hello \(data.name)!"
@@ -33,7 +31,7 @@ public func routes(_ router: Router) throws {
         return InfoResponse(request: data)
     }
     
-/// Challenge time!
+//Challenge time!
     router.get("date") { req -> String in
         let date = Date()
         let formatter = DateFormatter()
@@ -43,11 +41,26 @@ public func routes(_ router: Router) throws {
         
         return result
     }
-}
     
+    router.get("counter", Int.parameter) { req -> CountJSON in
+        let count = try req.parameters.next(Int.self)
+        return CountJSON(count: count)
+    }
+    
+}
+
+    struct InfoData: Content {
+        let name: String
+    }
+
     struct InfoResponse : Content {
         let request: InfoData
     }
+
+    struct CountJSON: Content {
+        let count: Int
+    }
+
 
 
 
